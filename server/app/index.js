@@ -11,7 +11,7 @@ app.use(require('./logging.middleware'));
 app.use(require('./body-parsing.middleware'));
 
 app.use(session({
-  secret: 'tongiscool', 
+  secret: 'tongiscool',
   resave: false,
   saveUninitialized: false
 }));

@@ -25,6 +25,20 @@ router.post('/signup', (req, res, next) => {
         .catch(next)
 })
 
+router.post('/logout', (req, res, next) => {
+    req.session.destroy() // thenable?
+    res.sendStatus(200);
+
+});
+
+router.get('/me', (req, res, next) => {
+    if (req.session.user) {
+        res.send(req.session.user);
+    } else {
+        console.log('You tried to get "me"');
+        res.send('No user logged in');
+    }
+});
 
 
 module.exports = router;

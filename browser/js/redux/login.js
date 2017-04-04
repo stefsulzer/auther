@@ -4,11 +4,14 @@ import axios from 'axios';
 
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 const CREATE_USER = 'CREATE_USER';
+const LOGOUT = 'LOGOUT';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
 const findUser = user => ({ type: SET_CURRENT_USER, user });
 const userCreator = user => ({ type: CREATE_USER, user });
+const makeLogout = () => ({ type: LOGOUT, user: null });
+// Shall we give logout param?
 
 /* ------------       REDUCERS     ------------------ */
 
@@ -16,10 +19,13 @@ export default function reducer(currentUser = {}, action) {
     switch (action.type) {
 
         case SET_CURRENT_USER:
-            return action.user
+            return action.user;
 
         case CREATE_USER:
-            return action.user
+            return action.user;
+            // OR ELSE TRY DEFNING ACTION.USER AS NULL HERE
+        case LOGOUT:
+            return action.user;
 
         default:
             return currentUser;
@@ -39,3 +45,10 @@ export const createUser = (user) => dispatch => {
         .then(res => dispatch(userCreator(res.data)))
         .catch(err => console.error('Creating user unsuccessful', err));
 };
+
+export const logout = () => dispatch => {
+    axios.post('/logout')
+        .then(res => dispatch(makeLogout()))
+        .catch(err => console.error('Logout unsuccessful', err));
+};
+
