@@ -15,7 +15,7 @@ const makeLogout = () => ({ type: LOGOUT, user: null });
 
 /* ------------       REDUCERS     ------------------ */
 
-export default function reducer(currentUser = {}, action) {
+export default function reducer(prevState = {}, action) {
     switch (action.type) {
 
         case SET_CURRENT_USER:
@@ -28,7 +28,7 @@ export default function reducer(currentUser = {}, action) {
             return action.user;
 
         default:
-            return currentUser;
+            return prevState;
     }
 }
 

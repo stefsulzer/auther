@@ -12,6 +12,9 @@ class Navbar extends React.Component {
   }
 
   render() {
+
+    console.log('Main render of Navbar: user "login"', this.props.user);
+
     return (
       <nav className="navbar navbar-default">
         <div className="container">
@@ -46,23 +49,24 @@ class Navbar extends React.Component {
 
   renderLoginSignup() {
     // if there is no person on session
-    return (
-      <ul className="nav navbar-nav navbar-right">
-        <li>
-         <Link to="/signup" activeClassName="active">signup</Link>
-        </li>
-        <li>
-          <Link to="/login" activeClassName="active">login</Link>
-        </li>
-      </ul>
-    );
+    if (!this.props.user.id) {
+      return (
+        <ul className="nav navbar-nav navbar-right">
+          <li>
+           <Link to="/signup" activeClassName="active">signup</Link>
+          </li>
+          <li>
+            <Link to="/login" activeClassName="active">login</Link>
+          </li>
+        </ul>
+      );
+  }
   }
 
   renderLogout() {
     // if person is on session
-
-
-    return (
+    if (this.props.user.id) {
+      return (
       <ul className="nav navbar-nav navbar-right">
         <li>
         <button
@@ -72,13 +76,18 @@ class Navbar extends React.Component {
         </button>
         </li>
       </ul>
-    );
+      );
+    }
+
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapProps = null;
+const mapProps = state => ({
+  user: state.login
+});
+
 
 const mapDispatch = dispatch => ({
   logout: () => {

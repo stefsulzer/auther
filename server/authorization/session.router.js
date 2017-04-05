@@ -5,10 +5,11 @@ router.post('/login', (req, res, next) => {
     User.findOne({ where: req.body })
         .then(user => {
             if (user) {
-                req.session.user = user
-                res.sendStatus(200)
+                req.session.user = user;
+                // Workshop had use sending 200 so login object on state was becomeing "Ok";
+                res.send(user);
             }
-            else res.sendStatus(401)
+            else res.sendStatus(401);
         })
         .catch(next)
 })
@@ -17,16 +18,16 @@ router.post('/signup', (req, res, next) => {
     User.create(req.body)
         .then(user => {
             if (user) {
-                req.session.user = user
-                res.sendStatus(200)
+                req.session.user = user;
+                res.send(user);
             }
-            else res.sendStatus(401)
+            else res.sendStatus(401);
         })
         .catch(next)
 })
 
 router.post('/logout', (req, res, next) => {
-    req.session.destroy() // thenable?
+    req.session.user = {} ; // thenable?
     res.sendStatus(200);
 
 });
